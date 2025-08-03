@@ -1,1 +1,16 @@
-﻿<h1 class="text-red-500">hu</h1>
+﻿@model StockTrade?
+
+@{
+    ViewBag.Title = $"Stock {Model?.StockSymbol}";
+}
+
+@if (Model is not null)
+{
+    <h1>@Model.StockName</h1>
+    <p id="stock-symbol">@Model.StockSymbol</p>
+    <p id="price">@Model.Price</p>
+
+    @section Scripts {
+        <script src="~/js/main.js"></script>
+    }
+} 

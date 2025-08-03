@@ -22,6 +22,8 @@ namespace StockApp.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
+            StockTrade? stockTrade = null;
+
             if (_tradingOptions.DefaultStockSymbol is null) _tradingOptions.DefaultStockSymbol = "MSFT";
 
             Dictionary<string, object>? companyProfile = await _finnhubService.GetCompanyProfile(_tradingOptions.DefaultStockSymbol!);
@@ -29,7 +31,7 @@ namespace StockApp.Controllers
 
             if (companyProfile is not null && priceQuote is not null)
             {
-                StockTrade stockTrade = new StockTrade()
+                stockTrade = new StockTrade()
                 {
                     StockSymbol = Convert.ToString(companyProfile["ticker"]),
                     StockName = Convert.ToString(companyProfile["name"]),
@@ -37,9 +39,13 @@ namespace StockApp.Controllers
                 };
             }
 
-            ViewBag.Token = _tradingOptions.ApiKey;
+            return View(stockTrade);
+        }
 
-            return View();
+        [HttpGet("get-token")]
+        public IActionResult GetToken()
+        {
+            return Ok(new { token = _tradingOptions.ApiKey!, symbol = _tradingOptions.DefaultStockSymbol! });
         }
     }
 }
