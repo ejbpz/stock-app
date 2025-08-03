@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using StockApp.Models.Options;
 using StockApp.Contracts;
+using System.Text.Json;
 
 namespace StockApp.Services
 {
@@ -15,14 +16,44 @@ namespace StockApp.Services
             _tradingOptions = options.Value;
         }
 
-        public override Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
+        public async override Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object>? response = new Dictionary<string, object>();
+
+            HttpRequestMessage requestMessage = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"{_tradingOptions.FinnhubConnection!}/stock/profile2?symbol={stockSymbol}&token={_tradingOptions.ApiKey!}"),
+            };
+
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(requestMessage);
+
+            Stream stream = responseMessage.Content.ReadAsStream();
+            StreamReader reader = new StreamReader(stream);
+            string jsonResponse = reader.ReadToEnd();
+            response = JsonSerializer.Deserialize<Dictionary<string, object>?>(jsonResponse);
+
+            return response;
         }
 
-        public override Task<Dictionary<string, object>?> GetStockPriceQuote(string stockSymbol)
+        public async override Task<Dictionary<string, object>?> GetStockPriceQuote(string stockSymbol)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object>? response = new Dictionary<string, object>();
+
+            HttpRequestMessage requestMessage = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"{_tradingOptions.FinnhubConnection!}/quote?symbol={stockSymbol}&token={_tradingOptions.ApiKey!}"),
+            };
+
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(requestMessage);
+
+            Stream stream = responseMessage.Content.ReadAsStream();
+            StreamReader reader = new StreamReader(stream);
+            string jsonResponse = reader.ReadToEnd();
+            response = JsonSerializer.Deserialize<Dictionary<string, object>?>(jsonResponse);
+
+            return response;
         }
     }
 }

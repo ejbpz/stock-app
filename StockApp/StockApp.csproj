@@ -8,10 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Controllers\.gitkeep" />
-    <Compile Include="Models\.gitkeep" />
-    <Compile Include="Options\.gitkeep" />
-    <Compile Include="Views\.gitkeep" />
+    <ProjectReference Include="..\StockApp.Contracts\StockApp.Contracts.csproj" />
+    <ProjectReference Include="..\StockApp.Models\StockApp.Models.csproj" />
+    <ProjectReference Include="..\StockApp.Services\StockApp.Services.csproj" />
   </ItemGroup>
 
 </Project>
