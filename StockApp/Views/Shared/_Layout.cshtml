@@ -4,10 +4,16 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/input.css" />
     <link rel="stylesheet" href="~/css/styles.css"/>
 </head>
-<body>
-    <div>
+<body class="bg-primary-light text-black dark:bg-primary-dark dark:text-white">
+    <header class="bg-secondary h-16">
+        <div class="container mx-auto flex h-full items-center justify-center">
+            <h3 class="text-xl font-bold">StockApp</h3>
+        </div>
+    </header>
+    <div class="container mx-auto">
         @RenderBody()
     </div>
 
