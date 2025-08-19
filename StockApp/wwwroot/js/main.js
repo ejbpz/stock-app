@@ -11,15 +11,15 @@ fetch('/get-token')
 
         const socket = new WebSocket(`wss://ws.finnhub.io?token=${token}`);
 
-        socket.addEventListener('open', function (event) {
+        socket.addEventListener('open', (event) => {
             socket.send(
                 JSON.stringify(
-                    { 'type': 'subscribe', 'symbol': symbol }
+                    { 'type': 'subscribe', 'symbol': symbol.textContent.trim() }
                 )
             );
         });
 
-        socket.addEventListener('message', function (event) {
+        socket.addEventListener('message', (event) => {
             let finnhubData = JSON.parse(event.data);
 
             if (!finnhubData || finnhubData.error) return;
