@@ -1,5 +1,5 @@
 using StockApp.Contracts;
-using StockApp.Options;
+using StockApp.Models.Options;
 using StockApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);

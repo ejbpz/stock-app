@@ -1,4 +1,4 @@
-﻿namespace StockApp.Options
+﻿namespace StockApp.Models.Options
 {
     public class TradingOptions
     {

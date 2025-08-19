@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\StockApp.Contracts\StockApp.Contracts.csproj" />
     <ProjectReference Include="..\StockApp.Models\StockApp.Models.csproj" />
     <ProjectReference Include="..\StockApp.Services\StockApp.Services.csproj" />
