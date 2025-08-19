@@ -1,5 +1,8 @@
 ﻿namespace StockApp.Models.Options
 {
+    /// <summary>
+    /// Options from configurations.
+    /// </summary>
     public class TradingOptions
     {
         public string? DefaultStockSymbol { get; set; }

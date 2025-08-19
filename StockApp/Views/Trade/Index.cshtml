@@ -9,7 +9,7 @@
     <main class="mt-5 flex w-full flex-wrap justify-around gap-6">
         <div class="w-[30%] rounded-lg border-[1px] px-3 py-5">
             <p class="text-lg font-medium">@Model.StockName (<span class="text-secondary font-semibold" id="stock-symbol">@Model.StockSymbol</span>)</p>
-            <p class="text-secondary">$ <span class="text-black dark:text-white" id="price">@Model.Price</span></p>
+            <p class="text-secondary">$ <span class="text-black dark:text-white" id="price">@Model.Price.ToString("#.##")</span></p>
         </div>
     </main>
 

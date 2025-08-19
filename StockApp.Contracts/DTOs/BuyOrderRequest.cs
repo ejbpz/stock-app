@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StockApp.Contracts.DTOs
 {
+    /// <summary>
+    /// DTO Request to buy an order.
+    /// </summary>
     public class BuyOrderRequest
     {
         [Required(ErrorMessage = "Stock Symbol is required.")]

@@ -2,6 +2,9 @@
 
 namespace StockApp.Models
 {
+    /// <summary>
+    /// Domain model for BuyOrder.
+    /// </summary>
     public class BuyOrder
     {
         public Guid BuyOrderId {  get; set; }

@@ -16,7 +16,7 @@ namespace StockApp.Services
             _tradingOptions = options.Value;
         }
 
-        public async override Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
+        public async Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
         {
             Dictionary<string, object>? response = new Dictionary<string, object>();
 
@@ -36,7 +36,7 @@ namespace StockApp.Services
             return response;
         }
 
-        public async override Task<Dictionary<string, object>?> GetStockPriceQuote(string stockSymbol)
+        public async Task<Dictionary<string, object>?> GetStockPriceQuote(string stockSymbol)
         {
             Dictionary<string, object>? response = new Dictionary<string, object>();
 

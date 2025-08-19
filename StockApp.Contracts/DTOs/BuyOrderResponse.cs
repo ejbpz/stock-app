@@ -1,5 +1,8 @@
 ﻿namespace StockApp.Contracts.DTOs
 {
+    /// <summary>
+    /// DTO Response when we buy an order.
+    /// </summary>
     public class BuyOrderResponse
     {
         public Guid BuyOrderId { get; set; }

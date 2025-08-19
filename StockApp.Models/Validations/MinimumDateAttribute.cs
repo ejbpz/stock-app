@@ -2,6 +2,9 @@
 
 namespace StockApp.Models.Validations
 {
+    /// <summary>
+    /// Validation to set a minimum date as a Data Annotations.
+    /// </summary>
     public class MinimumDate : ValidationAttribute
     {
         private readonly DateTime _minimumDateTime;
