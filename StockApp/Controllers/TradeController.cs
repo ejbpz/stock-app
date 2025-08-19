@@ -46,7 +46,7 @@ namespace StockApp.Controllers
         [HttpGet("get-token")]
         public IActionResult GetToken()
         {
-            return Ok(new { token = _tradingOptions.ApiKey!, symbol = _tradingOptions.DefaultStockSymbol! });
+            return Ok(new { token = _tradingOptions.ApiKey! });
         }
     }
 }

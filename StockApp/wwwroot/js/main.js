@@ -1,4 +1,5 @@
 ﻿let price = document.querySelector('#price');
+let symbol = document.querySelector('#stock-symbol');
 
 fetch('/get-token')
     .then(resp => {
@@ -7,7 +8,6 @@ fetch('/get-token')
     })
     .then(data => {
         const token = data.token;
-        const symbol = data.symbol;
 
         const socket = new WebSocket(`wss://ws.finnhub.io?token=${token}`);
 
