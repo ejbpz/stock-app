@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StockApp.Contracts\StockApp.Contracts.csproj" />
+    <ProjectReference Include="..\StockApp.Services\StockApp.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 

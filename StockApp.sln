@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockApp.Services", "StockA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockApp.Models", "StockApp.Models\StockApp.Models.csproj", "{4552E6DF-1AE3-4364-96CF-A17FDC0D3C04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockApp.Test", "StockApp.Test\StockApp.Test.csproj", "{12D5E234-0DFC-4134-A724-08D813E8420A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4552E6DF-1AE3-4364-96CF-A17FDC0D3C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4552E6DF-1AE3-4364-96CF-A17FDC0D3C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4552E6DF-1AE3-4364-96CF-A17FDC0D3C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12D5E234-0DFC-4134-A724-08D813E8420A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D5E234-0DFC-4134-A724-08D813E8420A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D5E234-0DFC-4134-A724-08D813E8420A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D5E234-0DFC-4134-A724-08D813E8420A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
