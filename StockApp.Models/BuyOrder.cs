@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace StockApp.Models
+﻿namespace StockApp.Models
 {
     /// <summary>
     /// Domain model for BuyOrder.
