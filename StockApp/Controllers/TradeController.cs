@@ -8,7 +8,7 @@ namespace StockApp.Controllers
 {
     [Controller]
     [Route("/")]
-    [Route("trade")]
+    [Route("[controller]")]
     public class TradeController : Controller
     {
         private readonly IFinnhubService _finnhubService;
