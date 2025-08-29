@@ -1,5 +1,6 @@
 ﻿let price = document.querySelector('#price');
 let symbol = document.querySelector('#stock-symbol');
+let changeColor = document.querySelector('#changeColor');
 
 fetch('/get-token')
     .then(resp => {
@@ -26,3 +27,7 @@ fetch('/get-token')
             if (finnhubData.data) price.innerHTML = finnhubData.data[0].p;
         });
     });
+
+changeColor.addEventListener('click', () => {
+    document.querySelector('html').classList.toggle('dark');
+});

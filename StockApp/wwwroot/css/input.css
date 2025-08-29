@@ -3,9 +3,14 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary-light: #FDF7FF;
-    --color-primary-dark: #1C1C1C;
-    --color-secondary: #5C62D1;
+    --color-primary: #FDF7FF;
+    --color-content: black;
+    --color-secondary: #5794F1;
     --color-error: crimson;
     --font-poppins: "Poppins", "sans-serif";
+}
+
+.dark {
+    --color-primary: #33333F;
+    --color-content: white;
 }

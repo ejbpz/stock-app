@@ -1,24 +1,43 @@
 ﻿@model StockTrade?
 
 @{
-    ViewBag.Title = $"Stock {Model?.StockSymbol}";
+    ViewBag.Title = $"Stock - {Model?.StockName}";
 }
 
 @if (Model is not null)
 {
-    <main class="mt-5 flex w-full flex-wrap justify-around gap-6">
-        <div class="w-[30%] rounded-lg border-[1px] px-3 py-5">
-            <p class="text-lg font-medium">@Model.StockName (<span class="text-secondary font-semibold" id="stock-symbol">@Model.StockSymbol</span>)</p>
-            <p class="text-secondary">$ <span class="text-black dark:text-white" id="price">@Model.Price.ToString("#.##")</span></p>
+    <div class="flex w-full flex-wrap items-center justify-center gap-2">
+        <div class="mx-5 h-full w-full rounded-lg border-[1px] px-3 py-5">
+            <p class="text-xl font-medium">@Model.StockName (<span class="font-semibold text-secondary" id="stock-symbol">@Model.StockSymbol</span>)</p>
+            <p class="text-lg text-secondary">$ <span class="text-content" id="price">@Model.Price.ToString("#.##")</span></p>
         </div>
-    </main>
+        <div class="mx-5 h-full w-full rounded-lg border-[1px] px-3 py-5">
+            <h3 class="text-lg font-medium">New order</h3>
+            <div class="flex w-full flex-col items-center justify-center">
+                <div class="flex w-full items-center justify-center gap-2 py-2 not-sm:flex-wrap">
+                    <label for="Quantity" class="block">Quantity:</label>
+                    <input type="number" id="Quantity" name="Quantity" value="100" class="rounded-sm border-[1px] border-content px-2 py-1 outline-0 not-sm:w-[90%]"/>
+                </div>
+                <div class="flex justify-center gap-2">
+                    <a href="#" class="flex items-center justify-center rounded-lg bg-red-500 px-3 py-1">
+                        <i class="fa-solid fa-arrow-down"></i>
+                        Sell
+                    </a>
+                    <a href="#" class="flex items-center justify-center rounded-lg bg-green-500 px-3 py-1">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        Buy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @section Scripts {
         <script src="~/js/main.js"></script>
     }
 } 
 else {
-    <div class="h-[calc(100vh-4rem)] flex w-full items-center justify-center">
-        <h2 class="text-error text-lg font-medium">Ocurrs an error while fetching the data.</h2>
+    <div class="flex h-full items-center">
+        <h2 class="text-medium flex-1 text-center font-medium text-error">Ocurrs an error while fetching the data.</h2>
     </div>
 }
