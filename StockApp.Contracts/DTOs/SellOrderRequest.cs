@@ -16,7 +16,7 @@ namespace StockApp.Contracts.DTOs
         public string? StockName { get; set; }
 
         [MinimumDate(2000, 1, 1, ErrorMessage = "The date given is not valid.")]
-        public DateTime DateAndTimeOfOrder { get; set; }
+        public DateTime DateAndTimeOfOrder { get; set; } = DateTime.Now;
 
         [Range(1, 100_000, ErrorMessage = "Quantity should be between {0} and {1}.")]
         public uint Quantity { get; set; }

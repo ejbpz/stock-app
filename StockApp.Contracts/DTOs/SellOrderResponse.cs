@@ -58,6 +58,7 @@ namespace StockApp.Contracts.DTOs
                 StockName = sellOrder.StockName,
                 StockSymbol = sellOrder.StockSymbol,
                 SellOrderId = sellOrder.SellOrderId,
+                DateAndTimeOfOrder = sellOrder.DateAndTimeOfOrder,
                 TradeAmount = sellOrder.Price * sellOrder.Quantity,
             };
         }

@@ -57,6 +57,7 @@ namespace StockApp.Contracts.DTOs
                 Quantity = buyOrder.Quantity,
                 StockName = buyOrder.StockName,
                 BuyOrderId = buyOrder.BuyOrderId,
+                StockSymbol = buyOrder.StockSymbol,
                 DateAndTimeOfOrder = buyOrder.DateAndTimeOfOrder,
                 TradeAmount = buyOrder.Price * buyOrder.Quantity,
             };

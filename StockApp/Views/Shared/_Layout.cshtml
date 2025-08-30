@@ -8,13 +8,30 @@
     <link rel="stylesheet" href="~/css/styles.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body class="font-poppins bg-primary-light mx-auto flex h-screen max-w-[700px] flex-col bg-primary text-content sm:w-[90%] sm:px-10 xl:border-primary xl:border-x-[1px] xl:shadow-xl">
+<body class="font-poppins bg-primary-light relative mx-auto flex h-screen max-w-[700px] flex-col bg-primary text-content sm:w-[90%] sm:px-10 xl:border-primary xl:border-x-[1px] xl:shadow-xl">
     <main class="container mx-auto mt-6 flex-1">
         @RenderBody()
     </main>
-    <header class="sticky bottom-0 left-0 mx-auto mt-4 h-16 w-[90%] rounded-t-2xl bg-secondary">
-        <div class="container mx-auto flex h-full items-center justify-center">
-            <h1 class="text-xl font-semibold text-white"><a href="/">Stocks</a></h1>
+    <div id="sideMenuRest" class="fixed top-0 left-0 z-20 hidden h-full w-[20%] rounded-r-xl bg-[#00000055] sm:w-[60%] xl:w-[80%]"></div>
+    <aside id="sideMenuOptions" class="fixed top-0 right-0 z-20 hidden h-full w-[80%] bg-primary sm:w-[40%] xl:w-[20%]">
+        <ul class="flex h-full w-full flex-col justify-center gap-5">
+            <li class="w-full py-3">
+                <a href="~/trade" class="inline-block w-full text-center">Home</a>
+            </li>
+            <li class="w-full py-3">
+                <a href="~/trade/all-orders" class="inline-block w-full text-center">Orders</a>
+            </li>
+        </ul>
+    </aside>
+    <header class="sticky bottom-0 left-0 z-10 mx-auto mt-4 min-h-16 w-[90%] rounded-t-2xl bg-secondary">
+        <div class="container mx-auto flex h-full w-full items-center justify-evenly text-white">
+            <button id="buttonTheme">
+                <i class="fa-solid fa-palette"></i>
+            </button>
+            <h1 class="text-xl font-semibold"><a href="/">Stocks</a></h1>
+            <button id="buttonAside">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
     </header>
     @RenderSection("Scripts", false)

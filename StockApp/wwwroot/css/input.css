@@ -14,3 +14,7 @@
     --color-primary: #33333F;
     --color-content: white;
 }
+
+.hidden {
+    display: none !important;
+}

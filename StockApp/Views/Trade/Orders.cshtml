@@ -1,0 +1,46 @@
+﻿@model Orders?
+
+@{
+    ViewBag.Title = $"Stock - Orders";
+}
+
+@if(Model is not null)
+{
+    <section class="flex w-full justify-center gap-x-2 gap-y-5 not-sm:flex-col not-sm:px-6">
+        <div>
+            @if(Model.BuyOrders.Count > 0)
+            {
+                <h2 class="text-medium text-lg">Bought orders</h2>
+                @foreach (BuyOrderResponse buyOrderResponse in Model.BuyOrders)
+                {
+                    <div class="my-2 rounded-lg border-[1px] border-content px-3 py-5 sm:w-[300px]">
+                        <h3 class="text-lg font-semibold">@buyOrderResponse.StockName (<span class="text-md font-medium text-secondary">@buyOrderResponse.StockSymbol</span>)</h3>
+                        <p><span class="font-semibold">@buyOrderResponse.Quantity</span> shares at <span class="font-semibold">$@buyOrderResponse.Price</span></p>
+                        <p class="my-4 text-sm">- Trade amount: <span class="font-semibold">$@buyOrderResponse.TradeAmount?.ToString("N0")</span></p>
+                        <p class="w-full border-content border-t-[1px] pt-4 text-right text-sm">@buyOrderResponse.DateAndTimeOfOrder?.ToString("dd MMMM yyyy - hh:mm:ss tt")</p>
+                    </div>
+                }
+            }
+        </div>
+
+        <div>
+            @if(Model.SellOrders.Count > 0)
+            {
+                <h2 class="text-medium text-lg">Sold orders</h2>
+                @foreach (SellOrderResponse sellOrderResponse in Model.SellOrders)
+                {
+                    <div class="my-2 rounded-lg border-[1px] border-content px-3 py-5 sm:w-[300px]">
+                        <h3 class="text-lg font-semibold">@sellOrderResponse.StockName (<span class="text-md font-medium text-secondary">@sellOrderResponse.StockSymbol</span>)</h3>
+                        <p><span class="font-semibold">@sellOrderResponse.Quantity</span> shares at <span class="font-semibold">$@sellOrderResponse.Price</span></p>
+                        <p class="my-4 text-sm">- Trade amount: <span class="font-semibold">$@sellOrderResponse.TradeAmount?.ToString("N0")</span></p>
+                        <p class="w-full border-content border-t-[1px] pt-4 text-right text-sm">@sellOrderResponse.DateAndTimeOfOrder?.ToString("dd MMMM yyyy - hh:mm:ss tt")</p>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+
+    @section Scripts {
+        <script src="~/js/main.js"></script>
+    }
+}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using StockApp.Contracts;
+using StockApp.Contracts.DTOs;
 using StockApp.Models.Options;
 using StockApp.ViewModels;
 
@@ -8,15 +9,17 @@ namespace StockApp.Controllers
 {
     [Controller]
     [Route("/")]
-    [Route("[controller]")]
+    [Route("trade")]
     public class TradeController : Controller
     {
         private readonly IFinnhubService _finnhubService;
+        private readonly IStocksService _stocksService;
         private readonly TradingOptions _tradingOptions;
 
-        public TradeController(IFinnhubService finnhubService, IOptions<TradingOptions> options)
+        public TradeController(IFinnhubService finnhubService, IStocksService stocksService, IOptions<TradingOptions> options)
         {
             _finnhubService = finnhubService;
+            _stocksService = stocksService;
             _tradingOptions = options.Value;
         }
 
@@ -26,6 +29,8 @@ namespace StockApp.Controllers
             StockTrade? stockTrade = null;
 
             if (_tradingOptions.DefaultStockSymbol is null) _tradingOptions.DefaultStockSymbol = "MSFT";
+            if (_tradingOptions.DefaultOrderQuantity is null) _tradingOptions.DefaultOrderQuantity = 100;
+            ViewBag.DefaultOrderQuantity = _tradingOptions.DefaultOrderQuantity;
 
             Dictionary<string, object>? companyProfile = await _finnhubService.GetCompanyProfile(_tradingOptions.DefaultStockSymbol!);
             Dictionary<string, object>? priceQuote = await _finnhubService.GetStockPriceQuote(_tradingOptions.DefaultStockSymbol!);
@@ -41,6 +46,44 @@ namespace StockApp.Controllers
             }
 
             return View(stockTrade);
+        }
+
+        [HttpGet("all-orders")]
+        public async Task<IActionResult> AllOrders()
+        {
+            Orders orders = new Orders
+            {
+                BuyOrders = await _stocksService.GetBuyOrders(),
+                SellOrders = await _stocksService.GetSellOrders(),
+            };
+            return View("Orders", orders);
+        }
+
+        [HttpPost("buy-order")]
+        public IActionResult BuyOrder(BuyOrderRequest? buyOrderRequest)
+        {
+            if(!ModelState.IsValid)
+            {
+                ViewBag.Errors = ModelState.Values.SelectMany(p => p.Errors).Select(e => e.ErrorMessage).ToList();
+
+                return View("Index");
+            }
+            _stocksService.CreateBuyOrder(buyOrderRequest);
+            return RedirectToAction("AllOrders", "Trade");
+        }
+
+        [HttpPost("sell-order")]
+        public IActionResult SellOrder(SellOrderRequest? sellOrderRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+                return View("Index");
+            }
+
+            _stocksService.CreateSellOrder(sellOrderRequest);
+            return RedirectToAction("AllOrders", "Trade");
         }
 
         [HttpGet("get-token")]

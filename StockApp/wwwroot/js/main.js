@@ -1,6 +1,10 @@
 ﻿let price = document.querySelector('#price');
 let symbol = document.querySelector('#stock-symbol');
-let changeColor = document.querySelector('#changeColor');
+let buttonTheme = document.querySelector('#buttonTheme');
+
+let sideMenuRest = document.querySelector('#sideMenuRest');
+let sideMenuOptions = document.querySelector('#sideMenuOptions');
+let buttonAside = document.querySelector('#buttonAside');
 
 fetch('/get-token')
     .then(resp => {
@@ -28,6 +32,18 @@ fetch('/get-token')
         });
     });
 
-changeColor.addEventListener('click', () => {
+buttonTheme.addEventListener('click', () => {
     document.querySelector('html').classList.toggle('dark');
+});
+
+buttonAside.addEventListener('click', () => {
+    document.body.classList.add('overflow-hidden');
+    sideMenuOptions.classList.remove('hidden');
+    sideMenuRest.classList.remove('hidden');
+});
+
+sideMenuRest.addEventListener('click', () => {
+    document.body.classList.remove('overflow-hidden');
+    sideMenuOptions.classList.add('hidden');
+    sideMenuRest.classList.add('hidden');
 });
