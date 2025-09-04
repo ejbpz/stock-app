@@ -16,20 +16,20 @@
     <aside id="sideMenuOptions" class="fixed top-0 right-0 z-20 hidden h-full w-[80%] bg-primary sm:w-[40%] xl:w-[20%]">
         <ul class="flex h-full w-full flex-col justify-center gap-5">
             <li class="w-full py-3">
-                <a href="~/trade" class="inline-block w-full text-center">Home</a>
+                <a asp-action="Index" asp-controller="Trade" class="inline-block w-full text-center">Home</a>
             </li>
             <li class="w-full py-3">
-                <a href="~/trade/all-orders" class="inline-block w-full text-center">Orders</a>
+                <a asp-action="AllOrders" asp-controller="Trade" class="inline-block w-full text-center">Orders</a>
             </li>
         </ul>
     </aside>
     <header class="sticky bottom-0 left-0 z-10 mx-auto mt-4 min-h-16 w-[90%] rounded-t-2xl bg-secondary">
         <div class="container mx-auto flex h-full w-full items-center justify-evenly text-white">
-            <button id="buttonTheme">
+            <button id="buttonTheme" class="cursor-pointer">
                 <i class="fa-solid fa-palette"></i>
             </button>
-            <h1 class="text-xl font-semibold"><a href="/">Stocks</a></h1>
-            <button id="buttonAside">
+            <h1 class="text-xl font-semibold"><a asp-action="Index" asp-controller="Trade">Stocks</a></h1>
+            <button id="buttonAside" class="cursor-pointer">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>

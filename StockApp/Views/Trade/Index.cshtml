@@ -15,8 +15,8 @@
             <h3 class="text-lg font-medium">New order</h3>
             <div class="flex w-full flex-col items-center justify-center">
                 <div class="flex w-full items-center justify-center gap-2 py-2 not-sm:flex-wrap">
-                    <label for="Quantity" class="block">Quantity:</label>
-                    <input type="number" id="Quantity" name="Quantity" value="@ViewBag.DefaultOrderQuantity" class="rounded-sm border-[1px] border-content px-2 py-1 outline-0 not-sm:w-[90%]" />
+                    <label asp-for="Quantity" class="block">Quantity:</label>
+                    <input asp-for="Quantity" value="@ViewBag.DefaultOrderQuantity" class="rounded-sm border-[1px] border-content px-2 py-1 outline-0 not-sm:w-[90%]" />
                 </div>
                 <div class="flex justify-center gap-2 text-white">
                     <button type="submit" formaction="~/trade/buy-order" class="flex cursor-pointer items-center justify-center rounded-lg bg-green-500 px-3 py-1">
@@ -30,9 +30,9 @@
                 </div>
             </div>
 
-            <input id="StockName" name="StockName" value="@Model.StockName" class="hidden" />
-            <input id="StockSymbol" name="StockSymbol" value="@Model.StockSymbol" class="hidden" />
-            <input id="Price" name="Price" value="@Model.Price" class="hidden" />
+            <input asp-for="StockName" class="hidden" />
+            <input asp-for="StockSymbol" class="hidden" />
+            <input asp-for="Price" class="hidden" />
         </form>
     </div>
 
