@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Rotativa.AspNetCore;
 using StockApp.Contracts;
 using StockApp.Contracts.DTOs;
 using StockApp.Models.Options;
 using StockApp.ViewModels;
+using System.Threading.Tasks;
 
 namespace StockApp.Controllers
 {
@@ -60,7 +62,7 @@ namespace StockApp.Controllers
         }
 
         [HttpPost("buy-order")]
-        public IActionResult BuyOrder(BuyOrderRequest? buyOrderRequest)
+        public async Task<IActionResult> BuyOrder(BuyOrderRequest? buyOrderRequest)
         {
             if(!ModelState.IsValid)
             {
@@ -68,12 +70,12 @@ namespace StockApp.Controllers
 
                 return View("Index");
             }
-            _stocksService.CreateBuyOrder(buyOrderRequest);
+            await _stocksService.CreateBuyOrder(buyOrderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
 
         [HttpPost("sell-order")]
-        public IActionResult SellOrder(SellOrderRequest? sellOrderRequest)
+        public async Task<IActionResult> SellOrder(SellOrderRequest? sellOrderRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -82,7 +84,7 @@ namespace StockApp.Controllers
                 return View("Index");
             }
 
-            _stocksService.CreateSellOrder(sellOrderRequest);
+            await _stocksService.CreateSellOrder(sellOrderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
 
@@ -90,6 +92,22 @@ namespace StockApp.Controllers
         public IActionResult GetToken()
         {
             return Ok(new { token = _tradingOptions.ApiKey! });
+        }
+
+        [HttpGet("orders-pdf")]
+        public async Task<IActionResult> OrdersPDF()
+        {
+            Orders orders = new Orders()
+            {
+                BuyOrders = await _stocksService.GetBuyOrders(),
+                SellOrders = await _stocksService.GetSellOrders(),
+            };
+
+            return new ViewAsPdf("OrdersPDF", orders)
+            {
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+                PageMargins = new Rotativa.AspNetCore.Options.Margins(20, 20, 20, 20)
+            };
         }
     }
 }

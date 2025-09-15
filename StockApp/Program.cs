@@ -20,6 +20,9 @@ builder.Services.AddDbContext<StocksMarketDbContext>(
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseRouting();
+
+Rotativa.AspNetCore.RotativaConfiguration.Setup("wwwroot", "Rotativa");
+
 app.MapControllers();
 
 app.Run();

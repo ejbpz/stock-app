@@ -1,0 +1,91 @@
+﻿@model Orders?
+@{
+    Layout = "";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<style>
+    * {
+       font-family: "Poppins", "sans-serif";
+    }
+
+    h3 {
+        font-size: 2rem;
+    }
+
+    table {
+        width: 100vw;
+        height: 100vh;
+        margin: 0 auto;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid black;
+    }
+
+    thead {
+        background-color: #5794F1;
+        color: white;
+    }
+
+    tr {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    th, td {
+        font-size: 1.2rem;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+</style>
+
+<h3>Orders</h3>
+
+@if (Model?.BuyOrders.Count > 0 || Model?.SellOrders.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Date and Time</th>
+                <th>Stock</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Trade Amount</th>
+                <th>Order Type</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model?.BuyOrders.Count > 0)
+            {
+                @foreach (BuyOrderResponse order in Model.BuyOrders)
+                {
+                    <tr>
+                        <td>@order.DateAndTimeOfOrder?.ToString("F")</td>
+                        <td>@order.StockName (<span>@order.StockSymbol</span>)</td>
+                        <td>@order.Quantity</td>
+                        <td>@order.Price?.ToString("C2")</td>
+                        <td>@order.TradeAmount?.ToString("C2")</td>
+                        <td>Buy</td>
+                    </tr>
+                }
+            }
+
+            @if (Model?.SellOrders.Count > 0)
+            {
+                @foreach (SellOrderResponse order in Model.SellOrders)
+                {
+                    <tr>
+                        <td>@order.DateAndTimeOfOrder?.ToString("F")</td>
+                        <td>@order.StockName (<span>@order.StockSymbol</span>)</td>
+                        <td>@order.Quantity</td>
+                        <td>@order.Price?.ToString("C2")</td>
+                        <td>@order.TradeAmount?.ToString("C2")</td>
+                        <td>Sell</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

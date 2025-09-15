@@ -7,6 +7,11 @@
 @if(Model is not null)
 {
     <section class="flex w-full justify-center gap-x-2 gap-y-5 not-sm:flex-col not-sm:px-6">
+        @if(Model.SellOrders.Count > 0 && Model.BuyOrders.Count > 0)
+        {
+            <a asp-action="OrdersPDF" asp-controller="Trade">Generate PDF</a>
+        }
+
         <div>
             @if(Model.BuyOrders.Count > 0)
             {
