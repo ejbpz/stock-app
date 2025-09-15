@@ -19,11 +19,11 @@
                     <input asp-for="Quantity" value="@ViewBag.DefaultOrderQuantity" class="rounded-sm border-[1px] border-content px-2 py-1 outline-0 not-sm:w-[90%]" />
                 </div>
                 <div class="flex justify-center gap-2 text-white">
-                    <button type="submit" formaction="~/trade/buy-order" class="flex cursor-pointer items-center justify-center rounded-lg bg-green-500 px-3 py-1">
+                    <button type="submit" asp-action="BuyOrder" asp-controller="Trade"  class="flex cursor-pointer items-center justify-center rounded-lg bg-green-500 px-3 py-1">
                         <i class="fa-solid fa-arrow-up"></i>
                         Buy
                     </button>
-                    <button type="submit" formaction="~/trade/sell-order" class="flex cursor-pointer items-center justify-center rounded-lg bg-red-500 px-3 py-1">
+                    <button type="submit" asp-action="SellOrder" asp-controller="Trade" class="flex cursor-pointer items-center justify-center rounded-lg bg-red-500 px-3 py-1">
                         <i class="fa-solid fa-arrow-down"></i>
                         Sell
                     </button>

@@ -1,4 +1,5 @@
-﻿using StockApp.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using StockApp.Contracts;
 using StockApp.Contracts.DTOs;
 using StockApp.Models;
 using StockApp.Services.Helpers;
@@ -7,16 +8,14 @@ namespace StockApp.Services
 {
     public class StocksService : IStocksService
     {
-        private readonly List<BuyOrder> _buyOrdersList;
-        private readonly List<SellOrder> _sellOrdersList;
+        private StocksMarketDbContext _dbContext;
 
-        public StocksService()
+        public StocksService(StocksMarketDbContext dbContext)
         {
-            _buyOrdersList = new List<BuyOrder>();
-            _sellOrdersList = new List<SellOrder>();
+            _dbContext = dbContext;
         }
 
-        public Task<BuyOrderResponse> CreateBuyOrder(BuyOrderRequest? buyOrderRequest)
+        public async Task<BuyOrderResponse> CreateBuyOrder(BuyOrderRequest? buyOrderRequest)
         {
             if (buyOrderRequest is null) throw new ArgumentNullException(nameof(buyOrderRequest));
 
@@ -25,14 +24,14 @@ namespace StockApp.Services
             BuyOrder buyOrder = buyOrderRequest.ToBuyOrder();
             buyOrder.BuyOrderId = Guid.NewGuid();
 
-            // Future Task to add order in Database.
-            _buyOrdersList.Add(buyOrder);
+            // Add order in Database.
+            _dbContext.BuyOrders.Add(buyOrder);
+            await _dbContext.SaveChangesAsync();
 
-            // Future return buyOrder.ToBuyOrderResponse().
-            return Task.FromResult(buyOrder.ToBuyOrderResponse());
+            return buyOrder.ToBuyOrderResponse();
         }
 
-        public Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? sellOrderRequest)
+        public async Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? sellOrderRequest)
         {
             if (sellOrderRequest is null) throw new ArgumentNullException(); 
 
@@ -41,19 +40,20 @@ namespace StockApp.Services
             SellOrder sellOrder = sellOrderRequest.ToSellOrder();
             sellOrder.SellOrderId = Guid.NewGuid();
 
-            _sellOrdersList.Add(sellOrder);
+            _dbContext.SellOrders.Add(sellOrder);
+            await _dbContext.SaveChangesAsync();
 
-            return Task.FromResult(sellOrder.ToSellOrderResponse());
+            return sellOrder.ToSellOrderResponse();
         }
 
-        public Task<List<BuyOrderResponse>> GetBuyOrders()
+        public async Task<List<BuyOrderResponse>> GetBuyOrders()
         {
-            return Task.FromResult(_buyOrdersList.Select(o => o.ToBuyOrderResponse()).ToList());
+            return await _dbContext.BuyOrders.Select(o => o.ToBuyOrderResponse()).ToListAsync();
         }
 
-        public Task<List<SellOrderResponse>> GetSellOrders()
+        public async Task<List<SellOrderResponse>> GetSellOrders()
         {
-            return Task.FromResult(_sellOrdersList.Select(o => o.ToSellOrderResponse()).ToList());
+            return await _dbContext.SellOrders.Select(o => o.ToSellOrderResponse()).ToListAsync();
         }
     }
 }

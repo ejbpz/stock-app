@@ -1,13 +1,21 @@
+using Microsoft.EntityFrameworkCore;
 using StockApp.Contracts;
+using StockApp.Models;
 using StockApp.Models.Options;
 using StockApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
+
 builder.Services.Configure<TradingOptions>(builder.Configuration.GetSection("TradingOptions"));
-builder.Services.AddSingleton<IFinnhubService, FinnhubService>();
-builder.Services.AddSingleton<IStocksService, StocksService>();
+
+builder.Services.AddScoped<IFinnhubService, FinnhubService>();
+builder.Services.AddScoped<IStocksService, StocksService>();
+
+builder.Services.AddDbContext<StocksMarketDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 var app = builder.Build();
 app.UseStaticFiles();
