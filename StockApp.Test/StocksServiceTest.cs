@@ -1,6 +1,6 @@
-﻿using StockApp.Contracts.DTOs;
+﻿using Xunit.Abstractions;
+using StockApp.Contracts.DTOs;
 using StockApp.Services;
-using Xunit.Abstractions;
 
 namespace StockApp.Test
 {
@@ -11,7 +11,7 @@ namespace StockApp.Test
 
         public StocksServiceTest(ITestOutputHelper testOutputHelper)
         {
-            _stocksService = new StocksService();
+            _stocksService = new StocksService(null);
             _testOutputHelper = testOutputHelper;
         }
 

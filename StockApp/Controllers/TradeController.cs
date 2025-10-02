@@ -5,7 +5,6 @@ using StockApp.Contracts;
 using StockApp.Contracts.DTOs;
 using StockApp.Models.Options;
 using StockApp.ViewModels;
-using System.Threading.Tasks;
 
 namespace StockApp.Controllers
 {

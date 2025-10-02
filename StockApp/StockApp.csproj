@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockApp.Contracts\StockApp.Contracts.csproj" />
+    <ProjectReference Include="..\StockApp.ServiceContracts\StockApp.ServiceContracts.csproj" />
     <ProjectReference Include="..\StockApp.Models\StockApp.Models.csproj" />
     <ProjectReference Include="..\StockApp.Services\StockApp.Services.csproj" />
   </ItemGroup>

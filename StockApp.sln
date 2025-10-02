@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockApp", "StockApp\StockApp.csproj", "{4697E95D-2025-462F-8795-58D0F7B4A17C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockApp.Contracts", "StockApp.Contracts\StockApp.Contracts.csproj", "{0619DA2F-4DC4-42CE-BE2D-6F6BBFDFDC3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockApp.ServiceContracts", "StockApp.ServiceContracts\StockApp.ServiceContracts.csproj", "{0619DA2F-4DC4-42CE-BE2D-6F6BBFDFDC3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockApp.Services", "StockApp.Services\StockApp.Services.csproj", "{BEE44D52-2DFD-4808-8068-724CEF06720D}"
 EndProject
