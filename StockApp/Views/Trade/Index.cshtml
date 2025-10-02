@@ -9,7 +9,7 @@
     <div class="flex w-full flex-wrap items-center justify-center gap-2">
         <div class="mx-5 h-full w-full rounded-lg border-[1px] px-3 py-5">
             <p class="text-xl font-medium">@Model.StockName (<span class="font-semibold text-secondary" id="stock-symbol">@Model.StockSymbol</span>)</p>
-            <p class="text-lg text-secondary">$ <span class="text-content" id="price">@Model.Price.ToString("#.##")</span></p>
+            <p class="text-lg text-secondary">$ <span class="text-content" id="price">@Model.Price?.ToString("#.##")</span></p>
         </div>
         <form method="post" class="mx-5 h-full w-full rounded-lg border-[1px] border-content px-3 py-5">
             <h3 class="text-lg font-medium">New order</h3>

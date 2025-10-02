@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using StockApp.Contracts;
 using StockApp.Models;
-using StockApp.Models.Options;
 using StockApp.Services;
+using StockApp.Contracts;
+using StockApp.Repositories;
+using StockApp.Models.Options;
+using StockApp.RepositoryContracts;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
@@ -10,6 +12,8 @@ builder.Services.AddHttpClient();
 
 builder.Services.Configure<TradingOptions>(builder.Configuration.GetSection("TradingOptions"));
 
+builder.Services.AddScoped<IFinnhubRepository, FinnhubRepository>();
+builder.Services.AddScoped<IStocksRepository, StocksRepository>();
 builder.Services.AddScoped<IFinnhubService, FinnhubService>();
 builder.Services.AddScoped<IStocksService, StocksService>();
 

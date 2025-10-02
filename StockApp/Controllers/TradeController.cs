@@ -13,9 +13,9 @@ namespace StockApp.Controllers
     [Route("trade")]
     public class TradeController : Controller
     {
-        private readonly IFinnhubService _finnhubService;
         private readonly IStocksService _stocksService;
         private readonly TradingOptions _tradingOptions;
+        private readonly IFinnhubService _finnhubService;
 
         public TradeController(IFinnhubService finnhubService, IStocksService stocksService, IOptions<TradingOptions> options)
         {

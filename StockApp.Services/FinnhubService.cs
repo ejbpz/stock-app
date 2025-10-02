@@ -1,59 +1,35 @@
-﻿using Microsoft.Extensions.Options;
-using StockApp.Models.Options;
-using StockApp.Contracts;
-using System.Text.Json;
+﻿using StockApp.Contracts;
+using StockApp.RepositoryContracts;
 
 namespace StockApp.Services
 {
     public class FinnhubService : IFinnhubService
     {
-        private readonly HttpClient _httpClient;
-        private readonly TradingOptions _tradingOptions;
+        private readonly IFinnhubRepository _finnhubRepository;
 
-        public FinnhubService(IHttpClientFactory httpClientFactory, IOptions<TradingOptions> options)
+        public FinnhubService(IFinnhubRepository finnhubRepository)
         {
-            _httpClient = httpClientFactory.CreateClient();
-            _tradingOptions = options.Value;
+            _finnhubRepository = finnhubRepository;
         }
 
         public async Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
         {
-            Dictionary<string, object>? response = new Dictionary<string, object>();
-
-            HttpRequestMessage requestMessage = new HttpRequestMessage()
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri($"{_tradingOptions.FinnhubConnection!}/stock/profile2?symbol={stockSymbol}&token={_tradingOptions.ApiKey!}"),
-            };
-
-            HttpResponseMessage responseMessage = await _httpClient.SendAsync(requestMessage);
-
-            Stream stream = responseMessage.Content.ReadAsStream();
-            StreamReader reader = new StreamReader(stream);
-            string jsonResponse = reader.ReadToEnd();
-            response = JsonSerializer.Deserialize<Dictionary<string, object>?>(jsonResponse);
-
-            return response;
+            return await _finnhubRepository.GetCompanyProfile(stockSymbol);
         }
 
         public async Task<Dictionary<string, object>?> GetStockPriceQuote(string stockSymbol)
         {
-            Dictionary<string, object>? response = new Dictionary<string, object>();
+            return await _finnhubRepository.GetStockPriceQuote(stockSymbol);
+        }
 
-            HttpRequestMessage requestMessage = new HttpRequestMessage()
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri($"{_tradingOptions.FinnhubConnection!}/quote?symbol={stockSymbol}&token={_tradingOptions.ApiKey!}"),
-            };
+        public async Task<List<Dictionary<string, string>>?> GetStocks()
+        {
+            return await _finnhubRepository.GetStocks();
+        }
 
-            HttpResponseMessage responseMessage = await _httpClient.SendAsync(requestMessage);
-
-            Stream stream = responseMessage.Content.ReadAsStream();
-            StreamReader reader = new StreamReader(stream);
-            string jsonResponse = reader.ReadToEnd();
-            response = JsonSerializer.Deserialize<Dictionary<string, object>?>(jsonResponse);
-
-            return response;
+        public async Task<Dictionary<string, object>?> SearchStocks(string stockSymbolToSearch)
+        {
+            return await _finnhubRepository.SearchStocks(stockSymbolToSearch);
         }
     }
 }
