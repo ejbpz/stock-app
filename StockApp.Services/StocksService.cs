@@ -25,7 +25,8 @@ namespace StockApp.Services
             buyOrder.BuyOrderId = Guid.NewGuid();
 
             // Add order in Database.
-            return (await _stocksRepository.CreateBuyOrder(buyOrder)).ToBuyOrderResponse();
+            await _stocksRepository.CreateBuyOrder(buyOrder);
+            return buyOrder.ToBuyOrderResponse();
         }
 
         public async Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? sellOrderRequest)
@@ -38,7 +39,8 @@ namespace StockApp.Services
             sellOrder.SellOrderId = Guid.NewGuid();
 
             // Add order in Database.
-            return (await _stocksRepository.CreateSellOrder(sellOrder)).ToSellOrderResponse();
+            await _stocksRepository.CreateSellOrder(sellOrder);
+            return sellOrder.ToSellOrderResponse();
         }
 
         public async Task<List<BuyOrderResponse>> GetBuyOrders()
