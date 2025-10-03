@@ -1,0 +1,31 @@
+﻿@model StockTrade?
+
+@{
+    TempData["Trade"] = Model?.StockSymbol;
+}
+
+@if(Model is not null)
+{
+    <div class="flex w-full flex-col gap-3">
+        <figure class="w-2/4 overflow-hidden">
+            <img src="@Model.Logo" class="h-full w-full object-cover"/>
+        </figure>
+        <div>
+            <p class="text-lg font-semibold">
+                @Model.StockName (<span class="text-md font-medium text-secondary">@Model.StockSymbol</span>)
+            </p>
+            <p class="block w-fit rounded-xl bg-secondary px-2 py-1 text-sm font-light">@Model.Industry</p>
+        </div>
+        <div>
+            <p class="text-md font-semibold">
+                Exchange: <span class="px-2 py-1 text-sm font-light text-secondary">@Model.Exchange</span>
+            </p>
+        </div>
+        <div>
+            <p class="text-md">@Model.Price?.ToString("C")</p>
+        </div>
+        <div>
+            <a asp-action="Index" asp-controller="Trade" class="inline-block w-fit rounded-lg bg-secondary px-2 py-1">Trade Now</a>
+        </div>
+    </div>
+}

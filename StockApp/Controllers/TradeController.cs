@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Options;
 using Rotativa.AspNetCore;
 using StockApp.Contracts;
-using StockApp.Contracts.DTOs;
-using StockApp.Models.Options;
 using StockApp.ViewModels;
+using StockApp.Models.Options;
+using StockApp.Contracts.DTOs;
 
 namespace StockApp.Controllers
 {
@@ -28,6 +28,7 @@ namespace StockApp.Controllers
         public async Task<IActionResult> Index()
         {
             StockTrade? stockTrade = null;
+            _tradingOptions.DefaultStockSymbol = TempData["Trade"]?.ToString() ?? null;
 
             if (_tradingOptions.DefaultStockSymbol is null) _tradingOptions.DefaultStockSymbol = "MSFT";
             if (_tradingOptions.DefaultOrderQuantity is null) _tradingOptions.DefaultOrderQuantity = 100;

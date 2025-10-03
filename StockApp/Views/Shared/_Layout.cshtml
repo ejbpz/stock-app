@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="~/css/styles.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body class="font-poppins bg-primary-light relative mx-auto flex h-screen max-w-[700px] flex-col bg-primary text-content sm:w-[90%] sm:px-10 xl:border-primary xl:border-x-[1px] xl:shadow-xl">
-    <main class="container mx-auto mt-6 flex-1">
+<body class="font-poppins bg-primary-light mx-auto flex h-screen max-w-[700px] flex-col bg-primary text-content sm:w-[90%] sm:px-10 xl:border-primary xl:border-x-[1px] xl:shadow-xl">
+    <main class="container mx-auto mt-6 flex-1 overflow-y-scroll">
         @RenderBody()
     </main>
     <div id="sideMenuRest" class="fixed top-0 left-0 z-20 hidden h-full w-[20%] rounded-r-xl bg-[#00000055] sm:w-[60%] xl:w-[80%]"></div>
@@ -20,6 +20,9 @@
             </li>
             <li class="w-full py-3">
                 <a asp-action="AllOrders" asp-controller="Trade" class="inline-block w-full text-center">Orders</a>
+            </li>
+            <li class="w-full py-3">
+                <a asp-action="Explore" asp-controller="Stocks" class="inline-block w-full text-center">Explore</a>
             </li>
         </ul>
     </aside>

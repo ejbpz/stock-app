@@ -6,6 +6,13 @@
 
 @if(Model is not null)
 {
+    @if (Model.SellOrders.Count > 0 && Model.BuyOrders.Count > 0)
+    {
+        <div class="mb-4 flex w-full justify-start not-sm:justify-center">
+            <a asp-action="OrdersPDF" asp-controller="Trade" class="w-fit rounded-lg bg-secondary p-2 text-white">Generate PDF</a>
+        </div>
+    }
+
     <section class="flex w-full justify-center gap-x-2 gap-y-5 not-sm:flex-col not-sm:px-6">
         <div>
             @if(Model.BuyOrders.Count > 0)
@@ -39,13 +46,6 @@
             }
         </div>
     </section>
-
-    @if (Model.SellOrders.Count > 0 && Model.BuyOrders.Count > 0)
-    {
-        <div class="flex justify-center">
-            <a asp-action="OrdersPDF" asp-controller="Trade" class="w-fit rounded-lg bg-secondary p-2 text-white">Generate PDF</a>
-        </div>
-    }
 
     @section Scripts {
         <script src="~/js/main.js"></script>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using StockApp.Contracts;
+using StockApp.ViewModels;
 using StockApp.Models.Options;
 
 namespace StockApp.Controllers
@@ -9,21 +10,50 @@ namespace StockApp.Controllers
     [Route("stocks")]
     public class StocksController : Controller
     {
-        private readonly TradingOptions _options;
+        private readonly TradingOptions _tradingOptions;
         private readonly IFinnhubService _finnhubService;
-        private readonly IStocksService _stocksService;
 
-        public StocksController(IOptions<TradingOptions> configureOptions, IFinnhubService finnhubService, IStocksService stocksService)
+        public StocksController(IOptions<TradingOptions> configureOptions, IFinnhubService finnhubService)
         {
-            _options = configureOptions.Value;
+            _tradingOptions = configureOptions.Value;
             _finnhubService = finnhubService;
-            _stocksService = stocksService;
         }
 
         [HttpGet("explore")]
-        public IActionResult Explore()
+        public async Task<IActionResult> Explore()
         {
-            return View();
+            List<Dictionary<string, string>>? stocksResponse = await _finnhubService.GetStocks();
+            List<Stock> stocks = new List<Stock>();
+
+            ViewBag.SelectedStock = _tradingOptions.DefaultStockSymbol;
+
+            if(stocksResponse is not null)
+            {
+                List<string> symbols = _tradingOptions.Top25PopularStocks!.Split(",").ToList();
+
+                foreach(Dictionary<string, string> stockResponse in stocksResponse)
+                {
+                    if (symbols.Contains(stockResponse["symbol"]))
+                    {
+                        Stock stock = new Stock() 
+                        {
+                            StockName = stockResponse["description"],
+                            StockSymbol = stockResponse["symbol"],
+                        };
+                    
+                        stocks.Add(stock);
+                    }
+
+                }
+            }
+
+            return View(stocks);
+        }
+
+        [HttpGet("stock-details/{stock}")]
+        public IActionResult Details(string stock)
+        {
+            return ViewComponent("SelectedStock", new { stockSymbolToSearch = stock });
         }
     }
 }

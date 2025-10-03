@@ -1,3 +1,26 @@
-﻿@{
+﻿@model List<Stock>
+
+@{
     ViewBag.Title = "Stock - Explore";
+}
+
+<section class="flex w-full not-sm:flex-col not-sm:items-center">
+    <div class="rounded-xl border-[1px] border-content sm:w-1/2">
+        <ul class="flex flex-col gap-3.5 p-5" id="dataList">
+            @foreach(Stock value in Model)
+            {
+                <li class="cursor-pointer border-b-[1px] border-b-content p-3 hover:rounded-t-lg hover:bg-secondary" data-symbol="@value.StockSymbol">
+                    <p class="font-poppins text-lg font-semibold">@value.StockName</p>
+                    <p class="text-md font-medium">(<span class="text-secondary">@value.StockSymbol</span>)</p>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="flex w-1/2 justify-center px-3 py-1 not-sm:w-3/4" id="stockViewComponent"></div>
+</section>
+
+@section Scripts {
+    <script src="~/js/searchStock.js"></script>
+    <script src="~/js/main.js"></script>
 }
