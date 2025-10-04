@@ -32,6 +32,7 @@ namespace StockApp.Controllers
 
             if (_tradingOptions.DefaultStockSymbol is null) _tradingOptions.DefaultStockSymbol = "MSFT";
             if (_tradingOptions.DefaultOrderQuantity is null) _tradingOptions.DefaultOrderQuantity = 100;
+
             ViewBag.DefaultOrderQuantity = _tradingOptions.DefaultOrderQuantity;
 
             Dictionary<string, object>? companyProfile = await _finnhubService.GetCompanyProfile(_tradingOptions.DefaultStockSymbol!);
