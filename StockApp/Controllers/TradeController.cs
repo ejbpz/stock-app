@@ -16,17 +16,21 @@ namespace StockApp.Controllers
         private readonly IStocksService _stocksService;
         private readonly TradingOptions _tradingOptions;
         private readonly IFinnhubService _finnhubService;
+        private readonly ILogger<TradeController> _logger;
 
-        public TradeController(IFinnhubService finnhubService, IStocksService stocksService, IOptions<TradingOptions> options)
+        public TradeController(IFinnhubService finnhubService, IStocksService stocksService, IOptions<TradingOptions> options, ILogger<TradeController> logger)
         {
             _finnhubService = finnhubService;
             _stocksService = stocksService;
             _tradingOptions = options.Value;
+            _logger = logger;
         }
 
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("User into IndexAction in TradeController");
+
             StockTrade? stockTrade = null;
             _tradingOptions.DefaultStockSymbol = TempData["Trade"]?.ToString() ?? null;
 
@@ -48,29 +52,40 @@ namespace StockApp.Controllers
                 };
             }
 
+
+            _logger.LogInformation("Return the view with the stock trade");
             return View(stockTrade);
         }
 
         [HttpGet("all-orders")]
         public async Task<IActionResult> AllOrders()
         {
+            _logger.LogInformation("User into AllOrdersAction in TradeController");
+
             Orders orders = new Orders
             {
                 BuyOrders = await _stocksService.GetBuyOrders(),
                 SellOrders = await _stocksService.GetSellOrders(),
             };
+
+            _logger.LogInformation("Return the view with the orders");
             return View("Orders", orders);
         }
 
         [HttpPost("buy-order")]
         public async Task<IActionResult> BuyOrder(BuyOrderRequest? buyOrderRequest)
         {
-            if(!ModelState.IsValid)
+            _logger.LogInformation("User into BuyOrderAction in TradeController");
+
+            if (!ModelState.IsValid)
             {
+                _logger.LogError("Model State invalid, return to IndexView");
                 ViewBag.Errors = ModelState.Values.SelectMany(p => p.Errors).Select(e => e.ErrorMessage).ToList();
 
                 return View("Index");
             }
+
+            _logger.LogInformation("Buy order successful, redirect to AllOrdersView");
             await _stocksService.CreateBuyOrder(buyOrderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
@@ -78,13 +93,17 @@ namespace StockApp.Controllers
         [HttpPost("sell-order")]
         public async Task<IActionResult> SellOrder(SellOrderRequest? sellOrderRequest)
         {
+            _logger.LogInformation("User into SellOrderAction in TradeController");
+
             if (!ModelState.IsValid)
             {
+                _logger.LogError("Model State invalid, return to IndexView");
                 ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
 
                 return View("Index");
             }
 
+            _logger.LogInformation("Sell order successful, redirect to AllOrdersView");
             await _stocksService.CreateSellOrder(sellOrderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
@@ -92,12 +111,14 @@ namespace StockApp.Controllers
         [HttpGet("get-token")]
         public IActionResult GetToken()
         {
+            _logger.LogInformation("Given token to UI");
             return Ok(new { token = _tradingOptions.ApiKey! });
         }
 
         [HttpGet("orders-pdf")]
         public async Task<IActionResult> OrdersPDF()
         {
+            _logger.LogInformation("Generating OrdersPDF");
             Orders orders = new Orders()
             {
                 BuyOrders = await _stocksService.GetBuyOrders(),

@@ -12,16 +12,20 @@ namespace StockApp.Controllers
     {
         private readonly TradingOptions _tradingOptions;
         private readonly IFinnhubService _finnhubService;
+        private readonly ILogger<TradeController> _logger;
 
-        public StocksController(IOptions<TradingOptions> configureOptions, IFinnhubService finnhubService)
+        public StocksController(IOptions<TradingOptions> configureOptions, IFinnhubService finnhubService, ILogger<TradeController> logger)
         {
             _tradingOptions = configureOptions.Value;
             _finnhubService = finnhubService;
+            _logger = logger;
         }
 
         [HttpGet("explore")]
         public async Task<IActionResult> Explore()
         {
+            _logger.LogInformation("User into ExploreAction in StocksController");
+
             List<Dictionary<string, string>>? stocksResponse = await _finnhubService.GetStocks();
             List<Stock> stocks = new List<Stock>();
 
@@ -29,6 +33,7 @@ namespace StockApp.Controllers
 
             if(stocksResponse is not null)
             {
+                _logger.LogInformation("Getting the popular stocks");
                 List<string> symbols = _tradingOptions.Top25PopularStocks!.Split(",").ToList();
 
                 foreach(Dictionary<string, string> stockResponse in stocksResponse)
@@ -47,12 +52,15 @@ namespace StockApp.Controllers
                 }
             }
 
+            _logger.LogInformation("Return to ExploreView with the 25 Popular Stocks");
             return View(stocks);
         }
 
         [HttpGet("stock-details/{stock}")]
         public IActionResult Details(string stock)
         {
+            _logger.LogInformation("User into DetailsAction in StocksController");
+            _logger.LogInformation("Return ViewComponent to UI");
             return ViewComponent("SelectedStock", new { stockSymbolToSearch = stock });
         }
     }
