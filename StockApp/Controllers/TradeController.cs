@@ -5,6 +5,7 @@ using StockApp.Contracts;
 using StockApp.ViewModels;
 using StockApp.Models.Options;
 using StockApp.Contracts.DTOs;
+using StockApp.Filters.ActionFilters;
 
 namespace StockApp.Controllers
 {
@@ -52,7 +53,6 @@ namespace StockApp.Controllers
                 };
             }
 
-
             _logger.LogInformation("Return the view with the stock trade");
             return View(stockTrade);
         }
@@ -73,38 +73,24 @@ namespace StockApp.Controllers
         }
 
         [HttpPost("buy-order")]
-        public async Task<IActionResult> BuyOrder(BuyOrderRequest? buyOrderRequest)
+        [CreateOrderFilterFactory]
+        public async Task<IActionResult> BuyOrder(BuyOrderRequest? orderRequest)
         {
             _logger.LogInformation("User into BuyOrderAction in TradeController");
 
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model State invalid, return to IndexView");
-                ViewBag.Errors = ModelState.Values.SelectMany(p => p.Errors).Select(e => e.ErrorMessage).ToList();
-
-                return View("Index");
-            }
-
             _logger.LogInformation("Buy order successful, redirect to AllOrdersView");
-            await _stocksService.CreateBuyOrder(buyOrderRequest);
+            await _stocksService.CreateBuyOrder(orderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
 
         [HttpPost("sell-order")]
-        public async Task<IActionResult> SellOrder(SellOrderRequest? sellOrderRequest)
+        [CreateOrderFilterFactory]
+        public async Task<IActionResult> SellOrder(SellOrderRequest? orderRequest)
         {
             _logger.LogInformation("User into SellOrderAction in TradeController");
 
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Model State invalid, return to IndexView");
-                ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-
-                return View("Index");
-            }
-
             _logger.LogInformation("Sell order successful, redirect to AllOrdersView");
-            await _stocksService.CreateSellOrder(sellOrderRequest);
+            await _stocksService.CreateSellOrder(orderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
 

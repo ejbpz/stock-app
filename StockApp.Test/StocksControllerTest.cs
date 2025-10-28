@@ -7,6 +7,7 @@ using StockApp.Contracts;
 using StockApp.ViewModels;
 using StockApp.Controllers;
 using StockApp.Models.Options;
+using Microsoft.Extensions.Logging;
 
 namespace StockApp.Test
 {
@@ -14,6 +15,9 @@ namespace StockApp.Test
     {
         private readonly IFinnhubService _finnhubService;
         private readonly Mock<IFinnhubService> _mockFinnhubService;
+
+        private readonly ILogger<TradeController> _logger;
+        private readonly Mock<ILogger<TradeController>> _mockLogger;
 
         private readonly IOptions<TradingOptions> _options;
 
@@ -31,6 +35,9 @@ namespace StockApp.Test
 
             _mockFinnhubService = new Mock<IFinnhubService>();
             _finnhubService = _mockFinnhubService.Object;
+
+            _mockLogger = new Mock<ILogger<TradeController>>();
+            _logger = _mockLogger.Object;
         }
 
         #region Explore
@@ -38,7 +45,7 @@ namespace StockApp.Test
         public async Task Explore_ReturnViewWithStocksList()
         {
             // Arrange
-            StocksController _stocksController = new StocksController(_options, _finnhubService);
+            StocksController _stocksController = new StocksController(_options, _finnhubService, _logger);
 
             List<Dictionary<string, string>> stocksDictionary = new List<Dictionary<string, string>>()
             {
