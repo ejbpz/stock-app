@@ -1,0 +1,17 @@
+﻿@model string?
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<div class="flex flex-col w-full h-full justify-center items-center">
+    <h1 class="font-medium text-xl">An error has occur.</h1>
+    @if(Model is not null)
+    {
+        <h2 class="text-lg">@Model</h2>
+    } 
+    else
+    {
+        <h2 class="text-lg">Internal server error.</h2>
+    }
+</div>

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using StockApp.Contracts;
 using StockApp.Filters.ActionFilters;
+using StockApp.Middlewares;
 using StockApp.Models;
 using StockApp.Models.Options;
 using StockApp.Repositories;
@@ -49,12 +50,15 @@ if(!builder.Environment.IsEnvironment("Test"))
 var app = builder.Build();
 
 if(builder.Environment.IsDevelopment())
-{
     app.UseDeveloperExceptionPage();
+else
+{
+    app.UseExceptionHandler("/error");
+    app.UseExceptionHandlingMiddleware();
 }
 
 
-if(!builder.Environment.IsEnvironment("Test"))
+if (!builder.Environment.IsEnvironment("Test"))
 {
     Rotativa.AspNetCore.RotativaConfiguration.Setup("wwwroot", "Rotativa");
 }
