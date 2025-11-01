@@ -14,15 +14,17 @@ namespace StockApp.Controllers
     [Route("trade")]
     public class TradeController : Controller
     {
-        private readonly IStocksService _stocksService;
         private readonly TradingOptions _tradingOptions;
-        private readonly IFinnhubService _finnhubService;
+        private readonly IStocksGetterService _stocksGetterService;
+        private readonly IStocksAdderService _stocksAdderService;
+        private readonly IFinnhubGetterService _finnhubGetterService;
         private readonly ILogger<TradeController> _logger;
 
-        public TradeController(IFinnhubService finnhubService, IStocksService stocksService, IOptions<TradingOptions> options, ILogger<TradeController> logger)
+        public TradeController(IFinnhubGetterService finnhubGetterService, IStocksGetterService stocksGetterService, IStocksAdderService stocksAdderService, IOptions<TradingOptions> options, ILogger<TradeController> logger)
         {
-            _finnhubService = finnhubService;
-            _stocksService = stocksService;
+            _finnhubGetterService = finnhubGetterService;
+            _stocksGetterService = stocksGetterService;
+            _stocksAdderService = stocksAdderService;
             _tradingOptions = options.Value;
             _logger = logger;
         }
@@ -40,8 +42,8 @@ namespace StockApp.Controllers
 
             ViewBag.DefaultOrderQuantity = _tradingOptions.DefaultOrderQuantity;
 
-            Dictionary<string, object>? companyProfile = await _finnhubService.GetCompanyProfile(_tradingOptions.DefaultStockSymbol!);
-            Dictionary<string, object>? priceQuote = await _finnhubService.GetStockPriceQuote(_tradingOptions.DefaultStockSymbol!);
+            Dictionary<string, object>? companyProfile = await _finnhubGetterService.GetCompanyProfile(_tradingOptions.DefaultStockSymbol!);
+            Dictionary<string, object>? priceQuote = await _finnhubGetterService.GetStockPriceQuote(_tradingOptions.DefaultStockSymbol!);
 
             if (companyProfile is not null && priceQuote is not null)
             {
@@ -64,8 +66,8 @@ namespace StockApp.Controllers
 
             Orders orders = new Orders
             {
-                BuyOrders = await _stocksService.GetBuyOrders(),
-                SellOrders = await _stocksService.GetSellOrders(),
+                BuyOrders = await _stocksGetterService.GetBuyOrders(),
+                SellOrders = await _stocksGetterService.GetSellOrders(),
             };
 
             _logger.LogInformation("Return the view with the orders");
@@ -79,7 +81,7 @@ namespace StockApp.Controllers
             _logger.LogInformation("User into BuyOrderAction in TradeController");
 
             _logger.LogInformation("Buy order successful, redirect to AllOrdersView");
-            await _stocksService.CreateBuyOrder(orderRequest);
+            await _stocksAdderService.CreateBuyOrder(orderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
 
@@ -90,7 +92,7 @@ namespace StockApp.Controllers
             _logger.LogInformation("User into SellOrderAction in TradeController");
 
             _logger.LogInformation("Sell order successful, redirect to AllOrdersView");
-            await _stocksService.CreateSellOrder(orderRequest);
+            await _stocksAdderService.CreateSellOrder(orderRequest);
             return RedirectToAction("AllOrders", "Trade");
         }
 
@@ -107,8 +109,8 @@ namespace StockApp.Controllers
             _logger.LogInformation("Generating OrdersPDF");
             Orders orders = new Orders()
             {
-                BuyOrders = await _stocksService.GetBuyOrders(),
-                SellOrders = await _stocksService.GetSellOrders(),
+                BuyOrders = await _stocksGetterService.GetBuyOrders(),
+                SellOrders = await _stocksGetterService.GetSellOrders(),
             };
 
             return new ViewAsPdf("OrdersPDF", orders)

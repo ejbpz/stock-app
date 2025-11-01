@@ -1,6 +1,6 @@
 ﻿namespace StockApp.Contracts
 {
-    public interface IFinnhubService
+    public interface IFinnhubGetterService
     {
         /// <summary>
         /// Get company's profile by its stock symbol.
@@ -21,12 +21,5 @@
         /// </summary>
         /// <returns>Returns list of companies data.</returns>
         Task<List<Dictionary<string, string>>?> GetStocks();
-
-        /// <summary>
-        /// Search the stocks for a company.
-        /// </summary>
-        /// <param name="stockSymbolToSearch">Company's symbol.</param>
-        /// <returns>Returns a dictionary of the stock,</returns>
-        Task<Dictionary<string, object>?> SearchStocks(string stockSymbolToSearch);
     }
 }

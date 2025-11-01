@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using StockApp.Contracts;
-using StockApp.Filters.ActionFilters;
-using StockApp.Middlewares;
 using StockApp.Models;
-using StockApp.Models.Options;
-using StockApp.Repositories;
-using StockApp.RepositoryContracts;
 using StockApp.Services;
+using StockApp.Contracts;
+using StockApp.Middlewares;
+using StockApp.Repositories;
+using StockApp.Models.Options;
+using StockApp.RepositoryContracts;
+using StockApp.Filters.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +34,12 @@ builder.Services.AddHttpLogging(options =>
 
 builder.Services.AddScoped<IFinnhubRepository, FinnhubRepository>();
 builder.Services.AddScoped<IStocksRepository, StocksRepository>();
-builder.Services.AddScoped<IFinnhubService, FinnhubService>();
-builder.Services.AddScoped<IStocksService, StocksService>();
+
+builder.Services.AddScoped<IFinnhubSearcherService, FinnhubSearcherService>();
+builder.Services.AddScoped<IFinnhubGetterService, FinnhubGetterService>();
+
+builder.Services.AddScoped<IStocksGetterService, StocksGetterService>();
+builder.Services.AddScoped<IStocksAdderService, StocksAdderService>();
 
 builder.Services.AddTransient<CreateOrderActionFilter>();
 

@@ -6,11 +6,11 @@ using StockApp.RepositoryContracts;
 
 namespace StockApp.Services
 {
-    public class StocksService : IStocksService
+    public class StocksAdderService : IStocksAdderService
     {
         private readonly IStocksRepository _stocksRepository;
 
-        public StocksService(IStocksRepository stocksRepository)
+        public StocksAdderService(IStocksRepository stocksRepository)
         {
             _stocksRepository = stocksRepository;
         }
@@ -41,16 +41,6 @@ namespace StockApp.Services
             // Add order in Database.
             await _stocksRepository.CreateSellOrder(sellOrder);
             return sellOrder.ToSellOrderResponse();
-        }
-
-        public async Task<List<BuyOrderResponse>> GetBuyOrders()
-        {
-            return (await _stocksRepository.GetBuyOrders()).Select(o => o.ToBuyOrderResponse()).ToList();
-        }
-
-        public async Task<List<SellOrderResponse>> GetSellOrders()
-        {
-            return (await _stocksRepository.GetSellOrders()).Select(o => o.ToSellOrderResponse()).ToList();
         }
     }
 }

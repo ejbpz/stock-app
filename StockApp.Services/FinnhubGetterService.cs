@@ -3,11 +3,11 @@ using StockApp.RepositoryContracts;
 
 namespace StockApp.Services
 {
-    public class FinnhubService : IFinnhubService
+    public class FinnhubGetterService : IFinnhubGetterService
     {
         private readonly IFinnhubRepository _finnhubRepository;
 
-        public FinnhubService(IFinnhubRepository finnhubRepository)
+        public FinnhubGetterService(IFinnhubRepository finnhubRepository)
         {
             _finnhubRepository = finnhubRepository;
         }
@@ -25,11 +25,6 @@ namespace StockApp.Services
         public async Task<List<Dictionary<string, string>>?> GetStocks()
         {
             return await _finnhubRepository.GetStocks();
-        }
-
-        public async Task<Dictionary<string, object>?> SearchStocks(string stockSymbolToSearch)
-        {
-            return await _finnhubRepository.SearchStocks(stockSymbolToSearch);
         }
     }
 }

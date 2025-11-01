@@ -13,7 +13,8 @@ namespace StockApp.Test
     {
         private readonly Fixture _fixture;
 
-        private readonly StocksService _stocksService;
+        private readonly StocksGetterService _stocksGetterService;
+        private readonly StocksAdderService _stocksAdderService;
 
         private readonly Mock<IStocksRepository> _mockStocksRepository;
         private readonly IStocksRepository _stocksRepository;
@@ -27,8 +28,9 @@ namespace StockApp.Test
             _mockStocksRepository = new Mock<IStocksRepository>();
             _stocksRepository = _mockStocksRepository.Object;
 
-            _stocksService = new StocksService(_stocksRepository);
-            
+            _stocksGetterService = new StocksGetterService(_stocksRepository);
+            _stocksAdderService = new StocksAdderService(_stocksRepository);
+
             _testOutputHelper = testOutputHelper;
         }
 
@@ -42,7 +44,7 @@ namespace StockApp.Test
 
             // Act
             Func<Task> action = async () => {
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             };
 
             // Assert
@@ -61,7 +63,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             };
 
             // Assert
@@ -80,7 +82,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             };
 
             // Assert
@@ -99,7 +101,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             };
 
             // Assert
@@ -118,7 +120,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             };
 
             // Assert
@@ -137,7 +139,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             };
 
             // Assert
@@ -156,7 +158,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateBuyOrder(buyOrderRequest);
+                await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             };
 
             // Assert
@@ -177,7 +179,7 @@ namespace StockApp.Test
                 .ReturnsAsync(buyOrder);
 
             // Act
-            var response = await _stocksService.CreateBuyOrder(buyOrderRequest);
+            var response = await _stocksAdderService.CreateBuyOrder(buyOrderRequest);
             buyOrderExpected.BuyOrderId = response.BuyOrderId;
 
             // Assert
@@ -198,7 +200,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             };
 
             // Assert
@@ -217,7 +219,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             };
 
             // Assert
@@ -236,7 +238,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             };
 
             // Assert
@@ -255,7 +257,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             };
 
             // Assert
@@ -274,7 +276,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             };
 
             // Assert
@@ -293,7 +295,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             };
 
             // Assert
@@ -312,7 +314,7 @@ namespace StockApp.Test
             // Act
             Func<Task> action = async () =>
             {
-                await _stocksService.CreateSellOrder(sellOrderRequest);
+                await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             };
 
             // Assert
@@ -333,7 +335,7 @@ namespace StockApp.Test
                 .ReturnsAsync(sellOrder);
 
             // Act
-            var response = await _stocksService.CreateSellOrder(sellOrderRequest);
+            var response = await _stocksAdderService.CreateSellOrder(sellOrderRequest);
             sellOrderExpected.SellOrderId = response.SellOrderId;
 
             // Assert
@@ -356,7 +358,7 @@ namespace StockApp.Test
                 .ReturnsAsync(buyOrders);
 
             // Act
-            var response = await _stocksService.GetBuyOrders();
+            var response = await _stocksGetterService.GetBuyOrders();
 
             // Assert
             response.Should().BeEmpty();
@@ -376,7 +378,7 @@ namespace StockApp.Test
                 .ReturnsAsync(buyOrders);
 
             // Act
-            var response = await _stocksService.GetBuyOrders();
+            var response = await _stocksGetterService.GetBuyOrders();
 
             // Print
             _testOutputHelper.WriteLine("Expected orders:");
@@ -415,7 +417,7 @@ namespace StockApp.Test
                 .ReturnsAsync(sellOrders);
 
             // Act
-            var response = await _stocksService.GetSellOrders();
+            var response = await _stocksGetterService.GetSellOrders();
 
             // Assert
             response.Should().BeEmpty();
@@ -435,7 +437,7 @@ namespace StockApp.Test
                 .ReturnsAsync(sellOrders);
 
             // Act
-            var response = await _stocksService.GetSellOrders();
+            var response = await _stocksGetterService.GetSellOrders();
 
             // Print
             _testOutputHelper.WriteLine("Expected orders:");

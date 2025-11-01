@@ -13,8 +13,8 @@ namespace StockApp.Test
 {
     public class StocksControllerTest
     {
-        private readonly IFinnhubService _finnhubService;
-        private readonly Mock<IFinnhubService> _mockFinnhubService;
+        private readonly IFinnhubGetterService _finnhubGetterService;
+        private readonly Mock<IFinnhubGetterService> _mockFinnhubGetterService;
 
         private readonly ILogger<TradeController> _logger;
         private readonly Mock<ILogger<TradeController>> _mockLogger;
@@ -33,8 +33,8 @@ namespace StockApp.Test
                 .Create()
             );
 
-            _mockFinnhubService = new Mock<IFinnhubService>();
-            _finnhubService = _mockFinnhubService.Object;
+            _mockFinnhubGetterService = new Mock<IFinnhubGetterService>();
+            _finnhubGetterService = _mockFinnhubGetterService.Object;
 
             _mockLogger = new Mock<ILogger<TradeController>>();
             _logger = _mockLogger.Object;
@@ -45,7 +45,7 @@ namespace StockApp.Test
         public async Task Explore_ReturnViewWithStocksList()
         {
             // Arrange
-            StocksController _stocksController = new StocksController(_options, _finnhubService, _logger);
+            StocksController _stocksController = new StocksController(_options, _finnhubGetterService, _logger);
 
             List<Dictionary<string, string>> stocksDictionary = new List<Dictionary<string, string>>()
             {
@@ -105,7 +105,7 @@ namespace StockApp.Test
                 },
             };
 
-            _mockFinnhubService.Setup(m => m
+            _mockFinnhubGetterService.Setup(m => m
                 .GetStocks())
                 .ReturnsAsync(stocksDictionary);
 

@@ -7,19 +7,19 @@ namespace StockApp.ViewComponents
     [ViewComponent]
     public class SelectedStockViewComponent : ViewComponent
     {
-        private readonly IFinnhubService _finnhubService;
+        private readonly IFinnhubGetterService _finnhubGetterService;
 
-        public SelectedStockViewComponent(IFinnhubService finnhubService)
+        public SelectedStockViewComponent(IFinnhubGetterService finnhubService)
         {
-            _finnhubService = finnhubService;
+            _finnhubGetterService = finnhubService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string? stockSymbolToSearch)
         {
             StockTrade? stockTrade = null;
 
-            var companyProfile = await _finnhubService.GetCompanyProfile(stockSymbolToSearch ?? "");
-            var companyQuote = await _finnhubService.GetStockPriceQuote(stockSymbolToSearch ?? "");
+            var companyProfile = await _finnhubGetterService.GetCompanyProfile(stockSymbolToSearch ?? "");
+            var companyQuote = await _finnhubGetterService.GetStockPriceQuote(stockSymbolToSearch ?? "");
 
             if(companyProfile is not null && companyQuote is not null)
             {

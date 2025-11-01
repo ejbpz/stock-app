@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using StockApp.Contracts;
-using StockApp.ViewModels;
 using StockApp.Models.Options;
+using StockApp.ViewModels;
+using StockApp.Contracts;
 
 namespace StockApp.Controllers
 {
@@ -11,13 +11,13 @@ namespace StockApp.Controllers
     public class StocksController : Controller
     {
         private readonly TradingOptions _tradingOptions;
-        private readonly IFinnhubService _finnhubService;
+        private readonly IFinnhubGetterService _finnhubGetterService;
         private readonly ILogger<TradeController> _logger;
 
-        public StocksController(IOptions<TradingOptions> configureOptions, IFinnhubService finnhubService, ILogger<TradeController> logger)
+        public StocksController(IOptions<TradingOptions> configureOptions, IFinnhubGetterService finnhubGetterService, ILogger<TradeController> logger)
         {
             _tradingOptions = configureOptions.Value;
-            _finnhubService = finnhubService;
+            _finnhubGetterService = finnhubGetterService;
             _logger = logger;
         }
 
@@ -26,7 +26,7 @@ namespace StockApp.Controllers
         {
             _logger.LogInformation("User into ExploreAction in StocksController");
 
-            List<Dictionary<string, string>>? stocksResponse = await _finnhubService.GetStocks();
+            List<Dictionary<string, string>>? stocksResponse = await _finnhubGetterService.GetStocks();
             List<Stock> stocks = new List<Stock>();
 
             ViewBag.SelectedStock = _tradingOptions.DefaultStockSymbol;
