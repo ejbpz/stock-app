@@ -19,16 +19,16 @@ This application focuses on demonstrating practical skills in:
 
 ## 🧪 Features
 
-✔️ Real-time and historical stock data from Finnhub
-✔️ Search for stock symbols and view detailed market information
-✔️ Interactive and dynamic UI with Razor + Tailwind
-✔️ Clean Architecture with clear separation of concerns
-✔️ View Components for reusable market widgets
-✔️ Custom Tag Helpers for UI consistency
-✔️ Server-side validation and Filters
-✔️ Logging using Serilog
-✔️ Full test coverage of core components using xUnit
-✔️ Responsive UI with **Tailwind 4** 
+✔️ Real-time and historical stock data from Finnhub  
+✔️ Search for stock symbols and view detailed market information  
+✔️ Interactive and dynamic UI with Razor + Tailwind  
+✔️ Clean Architecture with clear separation of concerns  
+✔️ View Components for reusable market widgets  
+✔️ Custom Tag Helpers for UI consistency  
+✔️ Server-side validation and Filters  
+✔️ Logging using Serilog  
+✔️ Full test coverage of core components using xUnit  
+✔️ Responsive UI with **Tailwind 4**  
 
 ---
 
